@@ -131,7 +131,7 @@ const Button=styled.div`
 const Table = () => {
     const [showModal, setShowModal] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
-  
+  const [selectedProductName, setSelectedProductName] = useState('');
 
     const dispatch = useDispatch();
 const approvedStatus = useSelector((state) => state.approved);
@@ -141,9 +141,10 @@ const handleTickClick = (itemId) => {
     const newStatus = approvedStatus.status[itemId] === 'Approved' ? ' ' : 'Approved';
     dispatch(toggleStatus({ itemId, status: newStatus }));
   };
-  const handleCrossClick = (itemId) => {
-    setSelectedItemIndex(itemId); // Store the selected item index
-    setShowModal(true); // Show the modal
+  const handleCrossClick = (itemId, productName) => {
+    setSelectedItemIndex(itemId);
+    setSelectedProductName(productName); // Store the selected product name
+    setShowModal(true);
   };
 
   const handleModalClose = () => {
@@ -180,11 +181,11 @@ const handleTickClick = (itemId) => {
           <TableHeaderItem>Price</TableHeaderItem>
           <TableHeaderItem>Quantity</TableHeaderItem>
           <TableHeaderItem>Total</TableHeaderItem>
-          <TableHeaderItem>Status</TableHeaderItem>
+          <TableHeaderItem >Status</TableHeaderItem>
           <TableHeaderItem></TableHeaderItem>
         </TableHeader>
         {data.map((item, index) => (
-          <TableRow key={index}>
+          <TableRow key={index} >
             <TableItem>
               <img src={process.env.PUBLIC_URL + '/' + item.icon} alt="Product" width="50" height="50" />
             </TableItem>
@@ -205,7 +206,7 @@ const handleTickClick = (itemId) => {
           </StatusButton>
         )}
               {approvedStatus.status[index] === 'Missing' && (
-                  <StatusButton style={{ backgroundColor: 'red', color: 'white', whiteSpace: 'nowrap' }}>
+                  <StatusButton style={{ backgroundColor: 'orange', color: 'white', whiteSpace: 'nowrap' }}>
                     Missing
                   </StatusButton>
                 )}
@@ -213,11 +214,14 @@ const handleTickClick = (itemId) => {
             <TableItem><IconContainer>
                 
         <TickIcon style={{color:'green',fontSize:'30px'}} onClick={() => handleTickClick(index)}><TiTick/> </TickIcon>
-      <CrossIcon  onClick={() => handleCrossClick(index)} style={{color:'red',fontSize:'20px'}}><TfiClose/></CrossIcon>
+        <CrossIcon
+              onClick={() => handleCrossClick(index, item.productName)} // Pass the product name
+              style={{ color: 'red', fontSize: '20px' }}
+            ><TfiClose/></CrossIcon>
       <EditIcon>Edit</EditIcon>
       </IconContainer>
       {showModal && selectedItemIndex === index && (
-              <StatusModal onClose={handleModalClose} onConfirm={handleStatusChange} />
+              <StatusModal onClose={handleModalClose} onConfirm={handleStatusChange} productName={selectedProductName}/>
             )}</TableItem>
            
           </TableRow>

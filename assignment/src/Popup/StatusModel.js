@@ -12,20 +12,22 @@ const ModalBackground = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  
 `;
 
 const ModalContainer = styled.div`
-  background-color: white;
+   background-color: white;
   padding: 20px;
   width: 30%;
-  height: 200px;
+  height: 180px;
   border: 1px solid black;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
-  position: relative; /* Position relative for the close icon */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+  border-radius:5px;
 `;
 
 const ModalHeader = styled.h2`
@@ -41,36 +43,40 @@ const ModalText = styled.p`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 10px;
+  width:425px;
+  align-items: flex-end; 
+  justify-content: flex-end; 
+  margin-top: auto; 
+  
 `;
+
+
 
 const ConfirmButton = styled.button`
   padding: 10px 20px;
-  background-color: #1A5D1A;
-  color: white;
+  background-color: white;
+  color: black;
+  
   border: none;
-  border-radius: 20px;
+  
   cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 20px;
+  
 
-  &:hover {
-    background-color: #146614;
-  }
+ 
 `;
 
 const CancelButton = styled.button`
   padding: 10px 20px;
-  background-color: #ccc;
-  color: white;
+  background-color: white;
+  color: black;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 20px;
+  
 
-  &:hover {
-    background-color: #999;
-  }
+
 `;
 
 const CloseIcon = styled.span`
@@ -78,10 +84,10 @@ const CloseIcon = styled.span`
   top: 10px;
   right: 10px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 30px;
 `;
 
-const StatusModal = ({ onClose, onConfirm }) => {
+const StatusModal = ({ onClose, onConfirm,productName }) => {
   const [isUrgent, setIsUrgent] = useState(false);
 
   const handleConfirm = () => {
@@ -94,13 +100,14 @@ const StatusModal = ({ onClose, onConfirm }) => {
     <ModalBackground>
       <ModalContainer>
         <CloseIcon onClick={onClose}>X</CloseIcon>
-        <ModalHeader>Missing Product</ModalHeader>
-        <ModalText>Is this product Urgent?</ModalText>
+        <ModalHeader>Missing Product?</ModalHeader>
+        <ModalText>Is this {productName}............ Urgent?</ModalText>
+        
         <ButtonContainer>
           <ConfirmButton onClick={() => onConfirm('Missing-urgent')}>Yes</ConfirmButton>
           <CancelButton onClick={() => onConfirm('Missing')}>No</CancelButton>
         </ButtonContainer>
-      </ModalContainer>
+        </ModalContainer>
     </ModalBackground>
   );
 };

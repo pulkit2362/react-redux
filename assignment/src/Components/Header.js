@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import data from "../Data/HeaderData";
+
 const Parentdiv = styled.div`
   width: 100%;
   margin-top: 10px;
@@ -57,7 +58,15 @@ const Header = () => {
             <TextWrapper bold={item.bold} marginBottom={index % 2 === 1}>
               {item.label}
             </TextWrapper>
-            <TextWrapper1>{item.value}</TextWrapper1>
+            {item.label === 'Category' ? (
+              <div>
+                {item.icon}
+                <TextWrapper1>{item.value}</TextWrapper1>
+              </div>
+            ) : (
+              <TextWrapper1>{item.value}</TextWrapper1>
+            )}
+            
           </Box>
         ))}
       </ChildDiv>
